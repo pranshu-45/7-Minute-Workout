@@ -16,28 +16,30 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvRestTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
         android:text="GET READY FOR"
+        tools:visibility="invisible"
         android:textColor="@color/colorAccent"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/flRestProgressBar"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarExercise" />
 
     <FrameLayout
         android:id="@+id/flRestProgressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
+        tools:visibility="invisible"
         android:background="@drawable/item_circular_color_accent_border"
-        app:layout_constraintTop_toBottomOf="@id/toolbarExercise"
+        app:layout_constraintTop_toBottomOf="@id/tvRestTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ProgressBar
             android:id="@+id/restProgressBar"
@@ -57,7 +59,8 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:background="@drawable/item_circular_color_accent_background"
-            android:gravity="center">
+            android:gravity="center"
+            >
 
             <TextView
                 android:id="@+id/restTvTimer"
@@ -66,24 +69,84 @@
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:text="10"/>
+                android:text="10"
+                />
 
         </LinearLayout>
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tvUpcomingExerciseTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Upcoming Exercise"
+        tools:visibility="invisible"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flRestProgressBar"
+        app:layout_constraintBottom_toTopOf="@+id/tvUpcomingExerciseName"/>
+
+    <TextView
+        android:id="@+id/tvUpcomingExerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="Jumping Jacks"
+        tools:visibility="invisible"
+        android:textColor="@color/colorAccent"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUpcomingExerciseTitle" />
+
+
+    <ImageView
+        android:id="@+id/ivExerciseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="110dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/_01_jumping_jacks"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/tvExerciseTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarExercise" />
+
+    <TextView
+        android:id="@+id/tvExerciseTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Exercise Name"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivExerciseImage"
+        app:layout_constraintBottom_toTopOf="@+id/flExerciseProgressBar"/>
+
+
     <FrameLayout
         android:id="@+id/flExerciseProgressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:background="@drawable/item_circular_color_accent_border"
-        app:layout_constraintTop_toBottomOf="@id/toolbarExercise"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:layout_marginTop="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvExerciseTitle"
+        tools:visibility="visible">
 
         <ProgressBar
             android:id="@+id/exerciseProgressBar"
@@ -92,11 +155,11 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:background="@drawable/circular_progress_gray"
-            android:progressDrawable="@drawable/circular_progress_bar"
             android:indeterminate="false"
             android:max="10"
             android:progress="100"
-            android:rotation="-90"/>
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:rotation="-90" />
 
         <LinearLayout
             android:layout_width="60dp"
@@ -109,10 +172,10 @@
                 android:id="@+id/exerciseTvTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="10"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
-                android:textStyle="bold"
-                android:text="10"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
