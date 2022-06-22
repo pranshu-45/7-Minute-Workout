@@ -115,6 +115,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/_01_jumping_jacks"
         android:visibility="visible"
+        android:contentDescription="Exercise Image"
         app:layout_constraintBottom_toTopOf="@+id/tvExerciseTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvExerciseTitle"
+        app:layout_constraintBottom_toTopOf="@id/rvExerciseStatus"
         tools:visibility="visible">
 
         <ProgressBar
@@ -180,6 +182,17 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExerciseStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flExerciseProgressBar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

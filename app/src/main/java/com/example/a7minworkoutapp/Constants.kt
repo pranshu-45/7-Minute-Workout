@@ -61,7 +61,7 @@ object Constants {
 
         val tricepsDip = ExerciseModel(
             7,
-            "Triceps Dips",
+            "Triceps Dip",
             R.drawable._07_triceps_dip,
             false,
             false

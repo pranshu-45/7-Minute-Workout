@@ -14,4 +14,5 @@
     <color name="lightGray">#C4C4C4</color>
 
     <color name="toolbar_color_control_normal">#000000</color>
+    <color name="finish_color_accent">#30B43C</color>
 </resources>
