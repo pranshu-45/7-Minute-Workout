@@ -5,13 +5,14 @@
       <map>
         <entry key="app/src/main/res/drawable/circular_progress_bar.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/circular_progress_gray.xml" value="0.103" />
+        <entry key="app/src/main/res/drawable/edit_text_cursor_color_accent.xml" value="0.2555" />
         <entry key="app/src/main/res/drawable/item_circular_color_accent_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/item_circular_color_accent_border.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/item_circular_finish_color_accent_border.xml" value="0.289" />
         <entry key="app/src/main/res/drawable/item_circular_thin_color_accent_border.xml" value="0.276" />
         <entry key="app/src/main/res/drawable/item_color_accent_border_ripple_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/rv_bg.xml" value="0.279" />
-        <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_exercise.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_finish.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
