@@ -39,39 +39,87 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/flBmi"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+    <LinearLayout
+        android:id="@+id/appAttributes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flStart"
-        android:background="@drawable/item_circular_color_accent_background">
+        app:layout_constraintTop_toBottomOf="@id/flStart">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <FrameLayout
+                android:id="@+id/flBmi"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/item_circular_color_accent_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="BMI"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_button_text_size"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="Calculator"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/default_button_text_size"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="BMI"
-            android:textColor="@color/white"
-            android:textSize="@dimen/default_button_text_size"
-            android:textStyle="bold" />
+            android:layout_marginStart="30dp">
 
-    </FrameLayout>
+            <FrameLayout
+                android:id="@+id/flHistory"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:foregroundGravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="Calculator"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/default_button_text_size"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flBmi"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/history_icon"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="History"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/default_button_text_size"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

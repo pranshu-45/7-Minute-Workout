@@ -7,7 +7,6 @@ import android.widget.Toast
 import com.example.a7minworkoutapp.databinding.ActivityBmiBinding
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import kotlin.math.round
 
 class BMIActivity : AppCompatActivity() {
     private var binding:ActivityBmiBinding? = null
@@ -29,13 +28,41 @@ class BMIActivity : AppCompatActivity() {
         setUpInitialContentView()
 
         binding?.btnCalculate?.setOnClickListener{
-            calculateBMI()
+            navigateCalculation()
+        }
+
+        binding?.rbUSUnits?.setOnCheckedChangeListener{_,isChecked->
+            if(isChecked){
+                rbUSViewSetup()
+            }
+            else{
+                rbMetricViewSetup()
+            }
         }
     }
 
-    private fun calculateBMI(){
-        val weight = binding?.etWeight?.text.toString()
-        val height = binding?.etHeight?.text.toString()
+    private fun rbMetricViewSetup(){
+        binding?.llMetricUnits?.visibility=View.VISIBLE
+        binding?.llUSUnits?.visibility=View.INVISIBLE
+    }
+
+    private fun rbUSViewSetup(){
+        binding?.llMetricUnits?.visibility=View.INVISIBLE
+        binding?.llUSUnits?.visibility=View.VISIBLE
+    }
+
+    private fun navigateCalculation(){
+        if(binding?.rbMetricUnits?.isChecked==true){
+            validateMetricUnits()
+        }
+        else{
+            validateUSUnits()
+        }
+    }
+
+    private fun validateMetricUnits(){
+        val weight = binding?.etMetricWeight?.text.toString()
+        val height = binding?.etMetricHeight?.text.toString()
 
         if(weight.isEmpty()){
             Toast.makeText(this,"Please enter your weight",Toast.LENGTH_SHORT).show()
@@ -50,16 +77,51 @@ class BMIActivity : AppCompatActivity() {
             Toast.makeText(this,"Please enter valid height",Toast.LENGTH_SHORT).show()
         }
         else{
-            val df = DecimalFormat("#.##")
-            df.roundingMode = RoundingMode.CEILING
-            var heightInM=height.toDouble()/100;
-            var weightInKg=weight.toDouble()
-            var bmiValue=df.format(weightInKg/(heightInM*heightInM))
-            //Toast.makeText(this,"$bmiValue",Toast.LENGTH_SHORT).show()
+            val data = ArrayList<Double>()
+            data.add(weight.toDouble())
+            data.add(height.toDouble())
 
-            setBmiDisplay(bmiValue)
+            calculateBmi(data)
         }
+    }
 
+    private fun validateUSUnits(){
+        val weight = binding?.etUSWeight?.text.toString()
+        val heightFeet = binding?.etUSHeightFeet?.text.toString()
+        val heightInch = binding?.etUSHeightInches?.text.toString()
+
+        if(weight.isEmpty()){
+            Toast.makeText(this,"Please enter your weight",Toast.LENGTH_SHORT).show()
+        }
+        else if(weight.toDouble()==0.0){
+            Toast.makeText(this,"Please enter valid weight",Toast.LENGTH_SHORT).show()
+        }
+        else if(heightFeet.isEmpty() || heightInch.isEmpty()){
+            Toast.makeText(this,"Please enter your height",Toast.LENGTH_SHORT).show()
+        }
+        else if(heightFeet.toDouble()==0.0 || heightInch.toDouble()==0.0 || heightInch.toDouble()>11){
+            Toast.makeText(this,"Please enter valid height",Toast.LENGTH_SHORT).show()
+        }
+        else{
+            val data = ArrayList<Double>()
+            val weightInKg = weight.toDouble()*0.453592;
+            val heightInCm = (heightFeet.toDouble()*12 + heightInch.toDouble())*2.54
+            data.add(weightInKg)
+            data.add(heightInCm)
+
+            calculateBmi(data)
+        }
+    }
+
+    private fun calculateBmi(data : ArrayList<Double>){
+
+        var heightInM=data[1]/100;
+        var weightInKg=data[0]
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        var bmiValue=df.format(weightInKg/(heightInM*heightInM))
+
+        setBmiDisplay(bmiValue)
     }
 
     private fun setBmiDisplay(bmiValue: String){
