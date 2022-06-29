@@ -12,7 +12,10 @@
     <color name="colorPrimaryDark">#B2212121</color>
     <color name="colorAccent">#008F24</color>
     <color name="lightGray">#C4C4C4</color>
+    <color name="status_bar_dark_green">#0d751b</color>
 
     <color name="toolbar_color_control_normal">#000000</color>
     <color name="finish_color_accent">#30B43C</color>
+
+    <color name="history_records_gray">#EBEBEB</color>
 </resources>
