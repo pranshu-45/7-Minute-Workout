@@ -23,10 +23,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var binding : ActivityExerciseBinding? = null
     private var restTimer:CountDownTimer?=null
     private var restProgress:Int=0
-    private var maxRestTime:Int=1
+    private var maxRestTime:Int=10
     private var exerciseTimer:CountDownTimer?=null
     private var exerciseProgress:Int=0
-    private var maxExerciseTime:Int=3
+    private var maxExerciseTime:Int=30
     private var exerciseList : ArrayList<ExerciseModel>? = null
     private var currentExercisePosition : Int=-1
     private var timeBeforeUpcomingExerciseAlert : Int=7
@@ -46,24 +46,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         binding?.toolbarExercise?.setNavigationOnClickListener{
             customDialogForBackButton()
-        }
-
-        try {
-            val soundURI = Uri.parse(
-                "android.resource://com.example.a7minworkoutapp/" +
-                        R.raw.notification_sound_tone
-            )
-            player = MediaPlayer.create(this, soundURI)
-            if(player!=null){
-                Toast.makeText(this,"initialised player",Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Toast.makeText(this,"player is null",Toast.LENGTH_SHORT).show()
-            }
-            player?.isLooping = false
-            player?.start()
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
 
         exerciseList=Constants.defaultExerciseList()
@@ -162,9 +144,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 player = MediaPlayer.create(applicationContext, soundURI)
                 player?.isLooping = false
                 player?.start()
-                if(player!=null){
-                    Toast.makeText(this,"initialised player",Toast.LENGTH_SHORT).show()
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -215,15 +194,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             toSpeak(binding?.tvUpcomingExerciseTitle?.text.toString())
             toSpeak(binding?.tvUpcomingExerciseName?.text.toString())
         }
-//        if(millisUntilFinished<=4*1000){
-//            var lastCall: Int = (millisUntilFinished/1000).toInt()
-//            if(lastCall==0){
-//                toSpeak("Start")
-//            }
-//            else{
-//                toSpeak(lastCall.toString())
-//            }
-//        }
+        if(millisUntilFinished<=4*1000){
+            var lastCall: Int = (millisUntilFinished/1000).toInt()
+            if(lastCall==0){
+                toSpeak("Start")
+            }
+            else{
+                toSpeak(lastCall.toString())
+            }
+        }
     }
 
     override fun onInit(status: Int) {
