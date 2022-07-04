@@ -7,11 +7,18 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.a7minworkoutapp.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LoginActivity : AppCompatActivity() {
@@ -29,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
             firebaseAuth =  FirebaseAuth.getInstance()
         }
         database = FirebaseFirestore.getInstance()
+        val historyDao = (application as WorkoutApp).db.historyDao()
 
         setSupportActionBar(binding?.LAToolbar)
         if(supportActionBar!=null){
@@ -48,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding?.btnLoginLA?.setOnClickListener {
-            userLogin(it)
+            userLogin(it,historyDao)
         }
     }
 
@@ -65,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun userLogin(view: View) {
+    private fun userLogin(view: View,historyDao : HistoryDao) {
         when {
             TextUtils.isEmpty(binding?.etLoginEmailLA?.text.toString().trim { it <= ' ' }) -> {
                 Toast.makeText(
@@ -106,8 +114,6 @@ class LoginActivity : AppCompatActivity() {
                                         firebaseAuth?.signOut()
                                     }
                                     else{
-                                        changeLoginStatusToTrue(uid)
-
                                         Toast.makeText(
                                             this@LoginActivity,
                                             "You are logged in successfully.",
@@ -129,6 +135,8 @@ class LoginActivity : AppCompatActivity() {
                                         )
                                         intent.putExtra("email_id", email)
                                         startActivity(intent)
+                                        changeLoginStatusToTrue(uid)
+                                        setupHistoryDatabase(uid,historyDao)
                                         finish()
                                     }
                                 }
@@ -144,5 +152,37 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    private fun setupHistoryDatabase(tokenId: String?,historyDao: HistoryDao) {
+        val ref = tokenId?.let { database?.collection("Users")?.document(it) }
+        val historyRef = ref?.collection("history")?.document("records")
+
+        val sdf = SimpleDateFormat("dd MMM yyyy HH:mm:ss",Locale.getDefault())
+        val records = ArrayList<Date>()
+        historyRef?.get()?.addOnSuccessListener {
+            val data = it.data
+            if (data != null) {
+                for(record in data){
+                    val date = sdf.parse(record.key)
+                    if (date != null) {
+                        records.add(date)
+                        Log.e("Date", "$date")
+                    }
+                }
+                Log.e("size","${records.size}")
+            }
+            records.sort()
+            lifecycleScope.launch{
+                Log.e("Check","in lifecycle scope")
+                for(record in records){
+                    Log.e("Check", "$record")
+                    val date = sdf.format(record)
+                    historyDao.insert(HistoryEntity(date))
+                }
+            }
+        }
+
+
     }
 }

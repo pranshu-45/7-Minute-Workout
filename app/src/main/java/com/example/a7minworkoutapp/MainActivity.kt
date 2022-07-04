@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         firebaseUser = firebaseAuth?.currentUser
         database = FirebaseFirestore.getInstance()
         val uid = firebaseUser?.uid
+
+        val historyDao = (application as WorkoutApp).db.historyDao()
         val historyChangeDao = (application as WorkoutApp).cdb.historyChangeDao()
 
         setupUsernameDisplay(uid)
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                     val changes = ArrayList(historyChangeDao.fetchAllChanges())
                     commitChanges(firebaseUser?.uid,changes)
                     historyChangeDao.clearAllChanges()
+                    historyDao.clearAllRecords()
                 }
 
                 changeLoginStatusToFalse(firebaseUser?.uid)

@@ -14,9 +14,12 @@ interface HistoryDao {
     @Delete
     suspend fun delete(historyEntity: HistoryEntity)
 
+    @Query("select * from `history-table` where date=:date")
+    fun fetchRecord(date:String): Flow<HistoryEntity>
+
     @Query("select * from `history-table`")
     fun fetchAllRecords(): Flow<List<HistoryEntity>>
 
-    @Query("select * from `history-table` where date=:date")
-    fun fetchRecord(date:String): Flow<HistoryEntity>
+    @Query("delete from `history-table`")
+    suspend fun clearAllRecords()
 }
