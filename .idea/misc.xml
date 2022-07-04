@@ -20,8 +20,11 @@
         <entry key="app/src/main/res/layout/activity_bmi.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_exercise.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_finish.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.16296296296296298" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.315625" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_custom_back_confirmation.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_history_record.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/recyclerview_bg.xml" value="0.34148550724637683" />
