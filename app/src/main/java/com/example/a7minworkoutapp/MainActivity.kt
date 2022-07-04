@@ -6,13 +6,16 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.a7minworkoutapp.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -31,16 +34,17 @@ class MainActivity : AppCompatActivity() {
         firebaseUser = firebaseAuth?.currentUser
         database = FirebaseFirestore.getInstance()
         val uid = firebaseUser?.uid
+        val historyChangeDao = (application as WorkoutApp).cdb.historyChangeDao()
 
         setupUsernameDisplay(uid)
 
         binding?.btnLogout?.setOnClickListener {
             if(checkForInternet(this)){
-//                lifecycleScope.launch{
-//                    val changes = ArrayList(historyChangeDao.fetchAllChanges())
-//                    commitChanges(firebaseUser?.uid,changes)
-//                    historyChangeDao.clearAllChanges()
-//                }
+                lifecycleScope.launch{
+                    val changes = ArrayList(historyChangeDao.fetchAllChanges())
+                    commitChanges(firebaseUser?.uid,changes)
+                    historyChangeDao.clearAllChanges()
+                }
 
                 changeLoginStatusToFalse(firebaseUser?.uid)
             }
@@ -62,6 +66,36 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this,HistoryActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun commitChanges(tokenId: String?, changes : ArrayList<HistoryChangeEntity>) {
+        val ref = tokenId?.let { database?.collection("Users")?.document(it) }
+        val historyRef = ref?.collection("history")?.document("records")
+
+        for(change in changes){
+            if(change.action==1){
+                var entry = hashMapOf<String,String>()
+                entry[change.tokenId]="true"
+                historyRef?.set(entry, SetOptions.merge())?.addOnCompleteListener{
+                    if(it.isSuccessful){
+                        Log.e("Merge Successful","$change")
+                    }
+                    else{
+                        Log.e("Merge Failed","$change")
+                    }
+                }
+            }
+            else if(change.action==0){
+                historyRef?.update(change.tokenId, FieldValue.delete())?.addOnCompleteListener{
+                    if(it.isSuccessful){
+                        Log.e("Delete Successful","$change")
+                    }
+                    else{
+                        Log.e("Delete Failed","$change")
+                    }
+                }
+            }
         }
     }
 
