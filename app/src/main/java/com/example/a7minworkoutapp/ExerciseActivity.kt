@@ -121,10 +121,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 exerciseList!![currentExercisePosition].setIsCompleted(true)
                 exerciseAdapter?.notifyItemChanged(currentExercisePosition)
 
-                val intent = Intent(this@ExerciseActivity,FinishActivity::class.java)
-                startActivity(intent)
-                finish()
-
                 if(currentExercisePosition<exerciseList!!.size-1){
                     setupRestView()
                 }
